@@ -14,20 +14,20 @@ async function fetchNews(query) {
 }
 
 function bindData(articles) {
-  const cardsConatiner = document.getElementById("cards-container");
+  const cardsContainer = document.getElementById("cards-container");
   const newsCardTemplate = document.getElementById("template-news-card");
 
-  cardsConatiner.innerHTML = "";
+  cardsContainer.innerHTML = "";
 
   articles.forEach((article) => {
     if (!article.urlToImage) return;
     const cardClone = newsCardTemplate.content.cloneNode(true);
-    filldataInCard(cardClone, article);
-    cardsConatiner.appendChild(cardClone);
+    fillDataInCard(cardClone, article);
+    cardsContainer.appendChild(cardClone);
   });
 }
 
-function filldataInCard(cardClone, article) {
+function fillDataInCard(cardClone, article) {
   const newsImg = cardClone.querySelector("#news-img");
   const newsTitle = cardClone.querySelector("#news-title");
   const newsSource = cardClone.querySelector("#news-source");
@@ -41,19 +41,20 @@ function filldataInCard(cardClone, article) {
     timeZone: "Asia/Jakarta",
   });
 
-  newsSource.innerHTML = `${article.source.name} . ${date}`;
+  newsSource.innerHTML = `${article.source.name} · ${date}`;
+
   cardClone.firstElementChild.addEventListener("click", () => {
-    window.open(article.url, "blank");
+    window.open(article.url, "_blank");
   });
 }
 
-let curSelectedNav = null;
+let currSelectedNav = null;
 function onNavItemClick(id) {
   fetchNews(id);
-  const navItems = document.getElementById(id);
-  curSelectedNav?.classList.remove("active");
-  curSelectedNav = navItems;
-  curSelectedNav.classList.add("active");
+  const navItems = (currSelectedNav = document.getElementById(id));
+  currSelectedNav?.classList.remove("active");
+  currSelectedNav = navItems;
+  currSelectedNav.classList.add("active");
 }
 
 const searchButton = document.getElementById("search-button");
@@ -63,6 +64,16 @@ searchButton.addEventListener("click", () => {
   const query = searchText.value;
   if (!query) return;
   fetchNews(query);
-  curSelectedNav?.classList.remove("active");
-  curSelectedNav = null;
+  currSelectedNav?.classList.remove("active");
+  currSelectedNav = null;
+});
+
+searchText.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    const query = searchText.value;
+    if (!query) return;
+    fetchNews(query);
+    currSelectedNav?.classList.remove("active");
+    currSelectedNav = null;
+  }
 });
