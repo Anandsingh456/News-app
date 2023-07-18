@@ -17,6 +17,6 @@ function validate() {
     window.location.replace("index.html");
     return false;
   } else {
-    alert("login failed,type character more than 8 digit");
+    alert("login failed,as the character should be more than 8 digit");
   }
 }

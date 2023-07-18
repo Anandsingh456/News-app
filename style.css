@@ -152,3 +152,32 @@ main {
 .news-source {
   margin-block: 12px;
 }
+
+.dark-mode {
+  background-color: black;
+  /* color: white; */
+}
+
+@media (max-width: 77em) {
+  .main-nav {
+    max-width: 55rem;
+  }
+}
+
+@media screen and (max-width: 50em) {
+  .search-button {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 50em) {
+  .main-nav {
+    justify-content: space-evenly;
+  }
+}
+
+@media screen and (max-width: 50em) {
+  .cards-container {
+    justify-content: space-evenly;
+  }
+}

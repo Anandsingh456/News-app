@@ -23,7 +23,7 @@ function bindData(articles) {
     if (!article.urlToImage) return;
     const cardClone = newsCardTemplate.content.cloneNode(true);
     fillDataInCard(cardClone, article);
-    cardsContainer.appendChild(cardClone);
+    cardsContainer.append(cardClone);
   });
 }
 
@@ -41,39 +41,44 @@ function fillDataInCard(cardClone, article) {
     timeZone: "Asia/Jakarta",
   });
 
-  newsSource.innerHTML = `${article.source.name} · ${date}`;
+  newsSource.innerHTML = `{$article.source.name} · ${date}`;
 
   cardClone.firstElementChild.addEventListener("click", () => {
     window.open(article.url, "_blank");
   });
 }
 
-let currSelectedNav = null;
+let curSelectedNav = null;
 function onNavItemClick(id) {
   fetchNews(id);
-  const navItems = (currSelectedNav = document.getElementById(id));
-  currSelectedNav?.classList.remove("active");
-  currSelectedNav = navItems;
-  currSelectedNav.classList.add("active");
+  const navItem = document.getElementById(id);
+  curSelectedNav?.classList.remove("active");
+  curSelectedNav = navItem;
+  curSelectedNav?.classList.add("active");
 }
 
 const searchButton = document.getElementById("search-button");
 const searchText = document.getElementById("search-text");
 
 searchButton.addEventListener("click", () => {
-  const query = searchText.value;
-  if (!query) return;
-  fetchNews(query);
-  currSelectedNav?.classList.remove("active");
-  currSelectedNav = null;
+  const anand = searchText.value;
+  if (!anand) return;
+  fetchNews(anand);
+  curSelectedNav?.classList.remove("active");
+  curSelectedNav = null;
 });
 
 searchText.addEventListener("keydown", (event) => {
   if (event.key === "Enter") {
-    const query = searchText.value;
-    if (!query) return;
-    fetchNews(query);
-    currSelectedNav?.classList.remove("active");
-    currSelectedNav = null;
+    const trees = searchText.value;
+    if (!trees) return;
+    fetchNews(trees);
+    curSelectedNav?.classList.remove("active");
+    curSelectedNav = null;
   }
 });
+
+function myFunction() {
+  var element = document.body;
+  element.classList.toggle("dark-mode");
+}
